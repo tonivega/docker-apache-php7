@@ -26,6 +26,9 @@ COPY apache_default /etc/apache2/sites-available/000-default.conf
 COPY run /usr/local/bin/run
 RUN chmod +x /usr/local/bin/run
 RUN a2enmod rewrite
+RUN useradd -u 1000 www-data-1000
+RUN sed -i "s/export APACHE_RUN_USER=www-data/export APACHE_RUN_USER=www-data-1000/g" /etc/apache2/envvars
+
 
 EXPOSE 80
 CMD ["/usr/local/bin/run"]
